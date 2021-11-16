@@ -1,0 +1,46 @@
+
+<%= form_with(model: member) do |form| %>
+  <% if member.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(member.errors.count, "error") %> prohibited this member from being saved:</h2>
+
+      <ul>
+        <% member.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <% @member = Member.find_by(uid: current_admin.uid) %>
+  <% if @member != nil %>
+    <% if @member.isAdmin %>
+      <div class="field">
+        <%= form.label :'Member Points' %>
+        <%= form.number_field(:totalPoints) %>
+      </div>
+    <% end %>
+    <% if @member.isOwner %>
+      <div class="field">
+      <%= form.label :'Give admin privileges?' %>
+      <br>
+      <%= form.select :isAdmin, [false, true]%>
+      </div>
+      <div class="field">
+        <%= form.label :'Give owner privileges?' %>
+        <br>
+        <%= form.select :isOwner, [false, true]%>
+      </div>
+    <% end %>
+  <% end %>
+  <br>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

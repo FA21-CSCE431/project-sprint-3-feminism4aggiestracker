@@ -1,0 +1,21 @@
+<div class='wrapper'>
+  <%= render(:partial => 'navbar', :locals => {:is_logged_in => true}) %>
+  <div class='container'>
+
+    <%= link_to('<< back home', announcements_path, :class => 'back-link', class: 'underline') %>
+
+    <center>
+    <h1>Edit Announcement</h1>
+    <% if @error %>
+    <p><b>There was an error updating the announcement. Please try again.</b></p>
+    <% end %>
+
+    <%= form_for(@announcement) do |f| %>
+    <%= render(:partial => 'form', :locals => {:f => f}) %>
+
+    <%= f.submit('Save') %>
+    <% end %>
+    </center>
+
+  </div>
+</div>

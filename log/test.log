@@ -1,0 +1,337 @@
+  [1m[35m (69.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (40.6ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6970856207796718860)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAnnouncements (20211001145920)
+  [1m[36mTRANSACTION (40.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (12.2ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" bigserial primary key, "title" character varying, "message" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211001145920"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMembers (20211002174359)
+  [1m[36mTRANSACTION (40.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (10.6ms)[0m  [1m[35mCREATE TABLE "members" ("id" bigserial primary key, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211002174359"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIsAdminToMembers (20211002175321)
+  [1m[36mTRANSACTION (39.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.6ms)[0m  [1m[35mALTER TABLE "members" ADD "isAdmin" boolean DEFAULT FALSE[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211002175321"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIsOwnerToMembers (20211002175335)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "members" ADD "isOwner" boolean DEFAULT FALSE[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211002175335"]]
+  [1m[36mTRANSACTION (41.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTotalPointsToMembers (20211002182457)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.9ms)[0m  [1m[35mALTER TABLE "members" ADD "totalPoints" integer DEFAULT 0[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211002182457"]]
+  [1m[36mTRANSACTION (41.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLogins (20211002213346)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (46.7ms)[0m  [1m[35mCREATE TABLE "logins" ("id" bigserial primary key, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211002213346"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DeviseCreateAdmins (20211003204119)
+  [1m[36mTRANSACTION (40.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "admins" ("id" bigserial primary key, "email" character varying NOT NULL, "full_name" character varying, "uid" character varying, "avatar_url" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_admins_on_email" ON "admins" ("email")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211003204119"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMeetings (20211003205736)
+  [1m[36mTRANSACTION (27.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "meetings" ("id" bigserial primary key, "status" boolean, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211003205736"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateJoins (20211004033034)
+  [1m[36mTRANSACTION (25.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "joins" ("id" bigserial primary key, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211004033034"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddNameToMeetings (20211004230318)
+  [1m[36mTRANSACTION (25.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.0ms)[0m  [1m[35mALTER TABLE "meetings" ADD "name" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211004230318"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddDateToMeetings (20211004230334)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "meetings" ADD "date" date[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211004230334"]]
+  [1m[36mTRANSACTION (23.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddMeetingToJoins (20211004231917)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (24.6ms)[0m  [1m[35mALTER TABLE "joins" ADD "meeting_id" bigint NOT NULL[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE INDEX "index_joins_on_meeting_id" ON "joins" ("meeting_id")[0m
+  [1m[35m (9.7ms)[0m  [1m[35mALTER TABLE "joins" ADD CONSTRAINT "fk_rails_a2e936631b"
+FOREIGN KEY ("meeting_id")
+  REFERENCES "meetings" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211004231917"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddMemberToJoins (20211004231929)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "joins" ADD "member_id" bigint NOT NULL[0m
+  [1m[35m (40.4ms)[0m  [1m[35mCREATE INDEX "index_joins_on_member_id" ON "joins" ("member_id")[0m
+  [1m[35m (2.8ms)[0m  [1m[35mALTER TABLE "joins" ADD CONSTRAINT "fk_rails_a46ec96141"
+FOREIGN KEY ("member_id")
+  REFERENCES "members" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211004231929"]]
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePosts (20211015144844)
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (87.3ms)[0m  [1m[35mCREATE TABLE "posts" ("id" bigserial primary key, "title" character varying, "body" character varying, "date" date, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211015144844"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddMemberToPosts (20211015150839)
+  [1m[36mTRANSACTION (42.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "posts" ADD "member_id" bigint NOT NULL[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE INDEX "index_posts_on_member_id" ON "posts" ("member_id")[0m
+  [1m[35m (1.6ms)[0m  [1m[35mALTER TABLE "posts" ADD CONSTRAINT "fk_rails_98586e02b8"
+FOREIGN KEY ("member_id")
+  REFERENCES "members" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211015150839"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLikes (20211018182211)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (27.6ms)[0m  [1m[35mCREATE TABLE "likes" ("id" bigserial primary key, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211018182211"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddMemberToLikes (20211018182227)
+  [1m[36mTRANSACTION (24.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "likes" ADD "member_id" bigint NOT NULL[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE INDEX "index_likes_on_member_id" ON "likes" ("member_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "likes" ADD CONSTRAINT "fk_rails_a65859420e"
+FOREIGN KEY ("member_id")
+  REFERENCES "members" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211018182227"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPostToLikes (20211018182238)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "likes" ADD "post_id" bigint NOT NULL[0m
+  [1m[35m (83.4ms)[0m  [1m[35mCREATE INDEX "index_likes_on_post_id" ON "likes" ("post_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[35mALTER TABLE "likes" ADD CONSTRAINT "fk_rails_87a8aac469"
+FOREIGN KEY ("post_id")
+  REFERENCES "posts" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211018182238"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEvents (20211021202548)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (83.3ms)[0m  [1m[35mCREATE TABLE "events" ("id" bigserial primary key, "name" character varying, "date" date, "status" boolean, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211021202548"]]
+  [1m[36mTRANSACTION (41.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveDateFrom (20211022151045)
+  [1m[36mTRANSACTION (39.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211022151045"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveDateFromPosts (20211022151224)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (85.1ms)[0m  [1m[35mALTER TABLE "posts" DROP COLUMN "date"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211022151224"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddLikesToPosts (20211023184158)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "posts" ADD "likes" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20211023184158"]]
+  [1m[36mTRANSACTION (34.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (33.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "test"], ["created_at", "2021-11-04 14:02:37.092534"], ["updated_at", "2021-11-04 14:02:37.092534"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT pg_advisory_unlock(6970856207796718860)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+Started GET "/members/new" for 127.0.0.1 at 2021-11-04 09:02:45 -0500
+Processing by MembersController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/new.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 1.1ms | Allocations: 328)
+  Rendered members/_form.html.erb (Duration: 20.4ms | Allocations: 4568)
+  Rendered members/new.html.erb within layouts/application (Duration: 24.9ms | Allocations: 5777)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in /Users/oriyonay/Desktop/programming/0 Classes/CSCE431/CSCE431-Project/public/packs-test
+[Webpacker] Hash: 31b351f6be346d3a55f8
+Version: webpack 4.46.0
+Time: 1113ms
+Built at: 11/04/2021 9:02:50 AM
+                                     Asset       Size       Chunks                         Chunk Names
+    js/application-dd998cb6b794ecb7e8af.js    125 KiB  application  [emitted] [immutable]  application
+js/application-dd998cb6b794ecb7e8af.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  384 bytes               [emitted]              
+Entrypoint application = js/application-dd998cb6b794ecb7e8af.js js/application-dd998cb6b794ecb7e8af.js.map
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/application.js] 492 bytes {application} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} [built]
+    + 3 hidden modules
+
+  Rendered layout layouts/application.html.erb (Duration: 4797.4ms | Allocations: 57268)
+Completed 200 OK in 4829ms (Views: 4804.3ms | ActiveRecord: 4.0ms | Allocations: 65754)
+Started POST "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#create as HTML
+  Parameters: {"member"=>{"name"=>"Jack", "isAdmin"=>"false", "isOwner"=>"false", "totalPoints"=>"0"}, "commit"=>"Create Member"}
+  [1m[36mTRANSACTION (34.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMember Create (3.7ms)[0m  [1m[32mINSERT INTO "members" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Jack"], ["created_at", "2021-11-04 14:02:50.446076"], ["updated_at", "2021-11-04 14:02:50.446076"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/members
+Completed 302 Found in 46ms (ActiveRecord: 38.4ms | Allocations: 1532)
+Started GET "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/index.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.6ms | Allocations: 45)
+  [1m[36mMember Load (1.2ms)[0m  [1m[34mSELECT "members".* FROM "members" ORDER BY created_at DESC[0m
+  Rendered members/index.html.erb within layouts/application (Duration: 11.6ms | Allocations: 2032)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 27.1ms | Allocations: 4554)
+Completed 200 OK in 31ms (Views: 27.5ms | ActiveRecord: 1.2ms | Allocations: 5378)
+Started GET "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/index.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.1ms | Allocations: 34)
+  [1m[36mMember Load (0.4ms)[0m  [1m[34mSELECT "members".* FROM "members" ORDER BY created_at DESC[0m
+  Rendered members/index.html.erb within layouts/application (Duration: 1.8ms | Allocations: 409)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 6.5ms | Allocations: 2808)
+Completed 200 OK in 8ms (Views: 6.6ms | ActiveRecord: 0.4ms | Allocations: 3306)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started GET "/members/new" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/new.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.3ms | Allocations: 53)
+  Rendered members/_form.html.erb (Duration: 2.4ms | Allocations: 1130)
+  Rendered members/new.html.erb within layouts/application (Duration: 3.2ms | Allocations: 1291)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 8.9ms | Allocations: 3829)
+Completed 200 OK in 12ms (Views: 9.7ms | ActiveRecord: 0.0ms | Allocations: 4304)
+Started POST "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#create as HTML
+  Parameters: {"member"=>{"name"=>"John", "isAdmin"=>"true", "isOwner"=>"false", "totalPoints"=>"0"}, "commit"=>"Create Member"}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMember Create (0.4ms)[0m  [1m[32mINSERT INTO "members" ("name", "created_at", "updated_at", "isAdmin") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "John"], ["created_at", "2021-11-04 14:02:50.660767"], ["updated_at", "2021-11-04 14:02:50.660767"], ["isAdmin", true]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/members
+Completed 302 Found in 3ms (ActiveRecord: 0.8ms | Allocations: 746)
+Started GET "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/index.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.1ms | Allocations: 34)
+  [1m[36mMember Load (0.4ms)[0m  [1m[34mSELECT "members".* FROM "members" ORDER BY created_at DESC[0m
+  Rendered members/index.html.erb within layouts/application (Duration: 1.8ms | Allocations: 462)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 7.5ms | Allocations: 2872)
+Completed 200 OK in 9ms (Views: 7.7ms | ActiveRecord: 0.4ms | Allocations: 3411)
+Started GET "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/index.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.1ms | Allocations: 34)
+  [1m[36mMember Load (0.4ms)[0m  [1m[34mSELECT "members".* FROM "members" ORDER BY created_at DESC[0m
+  Rendered members/index.html.erb within layouts/application (Duration: 1.7ms | Allocations: 409)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 7.3ms | Allocations: 2808)
+Completed 200 OK in 9ms (Views: 7.5ms | ActiveRecord: 0.4ms | Allocations: 3310)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mBEGIN[0m
+Started GET "/members/new" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/new.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered members/_form.html.erb (Duration: 2.1ms | Allocations: 1129)
+  Rendered members/new.html.erb within layouts/application (Duration: 3.1ms | Allocations: 1290)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 8.0ms | Allocations: 3827)
+Completed 200 OK in 9ms (Views: 8.6ms | ActiveRecord: 0.0ms | Allocations: 4299)
+Started POST "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#create as HTML
+  Parameters: {"member"=>{"name"=>"Jen", "isAdmin"=>"false", "isOwner"=>"true", "totalPoints"=>"0"}, "commit"=>"Create Member"}
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMember Create (0.4ms)[0m  [1m[32mINSERT INTO "members" ("name", "created_at", "updated_at", "isOwner") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Jen"], ["created_at", "2021-11-04 14:02:50.747965"], ["updated_at", "2021-11-04 14:02:50.747965"], ["isOwner", true]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/members
+Completed 302 Found in 5ms (ActiveRecord: 0.8ms | Allocations: 738)
+Started GET "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/index.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.1ms | Allocations: 34)
+  [1m[36mMember Load (0.4ms)[0m  [1m[34mSELECT "members".* FROM "members" ORDER BY created_at DESC[0m
+  Rendered members/index.html.erb within layouts/application (Duration: 2.2ms | Allocations: 461)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 8.2ms | Allocations: 2866)
+Completed 200 OK in 10ms (Views: 8.4ms | ActiveRecord: 0.4ms | Allocations: 3403)
+Started GET "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/index.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.1ms | Allocations: 34)
+  [1m[36mMember Load (0.5ms)[0m  [1m[34mSELECT "members".* FROM "members" ORDER BY created_at DESC[0m
+  Rendered members/index.html.erb within layouts/application (Duration: 1.9ms | Allocations: 409)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 6.5ms | Allocations: 2808)
+Completed 200 OK in 8ms (Views: 6.5ms | ActiveRecord: 0.5ms | Allocations: 3302)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started GET "/members/new" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/new.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.3ms | Allocations: 53)
+  Rendered members/_form.html.erb (Duration: 3.2ms | Allocations: 1129)
+  Rendered members/new.html.erb within layouts/application (Duration: 4.3ms | Allocations: 1290)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 12.0ms | Allocations: 3827)
+Completed 200 OK in 14ms (Views: 13.6ms | ActiveRecord: 0.0ms | Allocations: 4299)
+Started POST "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#create as HTML
+  Parameters: {"member"=>{"name"=>"Jacob", "isAdmin"=>"false", "isOwner"=>"false", "totalPoints"=>"110"}, "commit"=>"Create Member"}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMember Create (0.4ms)[0m  [1m[32mINSERT INTO "members" ("name", "created_at", "updated_at", "totalPoints") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Jacob"], ["created_at", "2021-11-04 14:02:50.848406"], ["updated_at", "2021-11-04 14:02:50.848406"], ["totalPoints", 110]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/members
+Completed 302 Found in 4ms (ActiveRecord: 0.8ms | Allocations: 740)
+Started GET "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/index.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.2ms | Allocations: 34)
+  [1m[36mMember Load (0.4ms)[0m  [1m[34mSELECT "members".* FROM "members" ORDER BY created_at DESC[0m
+  Rendered members/index.html.erb within layouts/application (Duration: 2.0ms | Allocations: 460)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 6.9ms | Allocations: 2870)
+Completed 200 OK in 8ms (Views: 7.0ms | ActiveRecord: 0.4ms | Allocations: 3408)
+Started GET "/members" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by MembersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering members/index.html.erb within layouts/application
+  Rendered members/_navbar.html.erb (Duration: 0.1ms | Allocations: 34)
+  [1m[36mMember Load (0.4ms)[0m  [1m[34mSELECT "members".* FROM "members" ORDER BY created_at DESC[0m
+  Rendered members/index.html.erb within layouts/application (Duration: 2.1ms | Allocations: 408)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 6.9ms | Allocations: 2807)
+Completed 200 OK in 8ms (Views: 7.0ms | ActiveRecord: 0.4ms | Allocations: 3297)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started GET "/likes/new" for 127.0.0.1 at 2021-11-04 09:02:50 -0500
+Processing by LikesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering likes/new.html.erb within layouts/application
+  Rendered likes/_form.html.erb (Duration: 3.6ms | Allocations: 1226)
+  Rendered likes/new.html.erb within layouts/application (Duration: 5.1ms | Allocations: 1561)
+  Rendered layout layouts/application.html.erb (Duration: 5.3ms | Allocations: 1600)
+Completed 500 Internal Server Error in 26ms (ActiveRecord: 4.2ms | Allocations: 5678)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
